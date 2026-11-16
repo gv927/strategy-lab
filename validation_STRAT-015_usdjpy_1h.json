@@ -1,0 +1,18 @@
+{
+  "strategy_id": "STRAT-015",
+  "pair": "usdjpy",
+  "timeframe": "1h",
+  "trades": 2915,
+  "win_rate": 0.32555746140651803,
+  "profit_factor": 1.2650931641097043,
+  "max_dd": 253.48732736103617,
+  "total_pnl_usd": 12876217.019866455,
+  "sharpe": 0.8196645821076418,
+  "oos_pf": 1.2979914464388203,
+  "oos_wr": 0.33761682242990654,
+  "passed": false,
+  "fail_reasons": [
+    "PF < 1.3: 1.27",
+    "Max DD > 20%: 253.5%"
+  ]
+}

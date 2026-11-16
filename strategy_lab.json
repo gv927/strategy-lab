@@ -1,0 +1,796 @@
+[
+  {
+    "id": "STRAT-001",
+    "name": "Gold Multi-EMA Trend Pullback with VWAP Anchor",
+    "source_url": "https://www.xauusdglobal.com/strategies/moving-averages-gold/",
+    "source_type": "blog",
+    "status": "Complete",
+    "indicators": [
+      "EMA 9",
+      "EMA 21",
+      "EMA 50",
+      "EMA 200",
+      "VWAP",
+      "ATR(14)"
+    ],
+    "parameters": {
+      "fast_ema": 9,
+      "medium_ema": 21,
+      "trend_ema": 50,
+      "regime_ema": 200,
+      "vwap_anchor": "session",
+      "atr_period": 14,
+      "atr_sl_mult": 1.5
+    },
+    "timeframe": "M5-H4 (multi-timeframe)",
+    "pairs": [
+      "XAUUSD"
+    ],
+    "session": "All, best London/NY overlap",
+    "rules": {
+      "regime_filter": "Price > EMA200 (long) / Price < EMA200 (short)",
+      "trend_filter": "EMA50 > EMA200 (long) / EMA50 < EMA200 (short)",
+      "entry_long": "Pullback to EMA21 in uptrend (EMA9 > EMA21 > EMA50), candle closes back above EMA21, confirm with VWAP (price > VWAP)",
+      "entry_short": "Pullback to EMA21 in downtrend (EMA9 < EMA21 < EMA50), candle closes back below EMA21, confirm with VWAP (price < VWAP)",
+      "stop": "1.5 \u00d7 ATR(14) beyond pullback low/high",
+      "target": "Trail behind EMA9 or fixed R-multiples (2R, 3R)",
+      "invalid": "Daily/4H close through EMA200"
+    },
+    "notes": "Multi-timeframe: Daily 50/200 for regime, H1 21/50 for trend, M5/M15 9/21 for entry. VWAP as intraday anchor.",
+    "date_found": "2026-11-16T14:07:51.476024"
+  },
+  {
+    "id": "STRAT-002",
+    "name": "EMA 9 / VWAP Crossover with ATR Trailing Stop",
+    "source_url": "https://ar.tradingview.com/script/EHADtuFr-EMA-9-VWAP-Strategy-with-ATR-Trailing-Stop-WIN-THE-TRADE/",
+    "source_type": "tradingview",
+    "status": "Complete",
+    "indicators": [
+      "EMA 9",
+      "VWAP (session)",
+      "ATR trailing"
+    ],
+    "parameters": {
+      "ema_period": 9,
+      "vwap_anchor": "session",
+      "atr_length": 14,
+      "atr_mult": 2.0
+    },
+    "timeframe": "M1, M5, M15, H1",
+    "pairs": [
+      "XAUUSD",
+      "Forex",
+      "Indices"
+    ],
+    "session": "All",
+    "rules": {
+      "entry_long": "EMA 9 crosses above VWAP (close confirmation)",
+      "entry_short": "EMA 9 crosses below VWAP (close confirmation)",
+      "stop": "ATR trailing stop (dynamic)",
+      "target": "Trailing stop captures trend",
+      "exit_long": "Close below EMA 9",
+      "exit_short": "Close above EMA 9"
+    },
+    "notes": "Bias defined by EMA vs VWAP relationship. ATR trailing locks profits.",
+    "date_found": "2026-11-16T14:07:51.476036"
+  },
+  {
+    "id": "STRAT-003",
+    "name": "Regime-Filtered Gold: VWAP + EMA50 Pullback + EMA50 Trail",
+    "source_url": "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6650958",
+    "source_type": "academic",
+    "status": "Complete",
+    "indicators": [
+      "EMA 50",
+      "EMA 200",
+      "VWAP (session)",
+      "ATR(14)"
+    ],
+    "parameters": {
+      "regime_ema": 200,
+      "pullback_ema": 50,
+      "trail_ema": 50,
+      "atr_period": 14,
+      "risk_per_trade": 0.01,
+      "daily_loss_limit": 0.03
+    },
+    "timeframe": "M15",
+    "pairs": [
+      "XAUUSD"
+    ],
+    "session": "All, news exclusion \u00b11hr",
+    "rules": {
+      "regime_long": "Price > EMA200 AND EMA200 rising",
+      "regime_short": "Price < EMA200 AND EMA200 falling",
+      "entry_long": "Pullback to EMA50 (price touches EMA50), rejection candle closes back above EMA50, price > VWAP",
+      "entry_short": "Rally to EMA50 (price touches EMA50), rejection candle closes back below EMA50, price < VWAP",
+      "stop": "ATR-adjusted position sizing (1% risk), hard SL at 1.5\u00d7ATR beyond EMA50",
+      "trail": "EMA50 as dynamic trailing stop (activated on candle close only, not intrabar)",
+      "target": "Trailing stop / daily loss limit 3%",
+      "news_filter": "No trades \u00b11 hour of major US data (CPI, NFP, FOMC, ISM)"
+    },
+    "notes": "Paper reports: 247 trades, 45.3% WR, PF 1.76, Sharpe 3.99, Max DD 5.1% (Jan-Dec 2024). Machine-testable rules.",
+    "date_found": "2026-11-16T14:07:51.476040"
+  },
+  {
+    "id": "STRAT-004",
+    "name": "Gold EMA/BB/VWAP Crossover with ATR SL/TP",
+    "source_url": "https://www.tradingview.com/script/mZYK8jsg/",
+    "source_type": "tradingview",
+    "status": "Complete",
+    "indicators": [
+      "Fast EMA",
+      "Slow EMA",
+      "BB Midline (20 SMA)",
+      "VWAP",
+      "ATR"
+    ],
+    "parameters": {
+      "fast_ema_len": 20,
+      "slow_ema_len": 50,
+      "bb_len": 20,
+      "atr_len": 14,
+      "atr_sl_mult": 2.5,
+      "atr_tp_mult": 3.0,
+      "sessions": [
+        "Asia",
+        "London",
+        "NY"
+      ],
+      "weekdays": [
+        "Mon",
+        "Tue",
+        "Wed",
+        "Thu",
+        "Fri"
+      ]
+    },
+    "timeframe": "M5, M15, M30, H1",
+    "pairs": [
+      "XAUUSD",
+      "Forex",
+      "Indices",
+      "Crypto"
+    ],
+    "session": "Session/weekday filtered",
+    "rules": {
+      "entry_long": "Fast EMA crosses above BB midline AND price > Slow EMA AND price > VWAP AND session/weekday allowed",
+      "entry_short": "Fast EMA crosses below BB midline AND price < Slow EMA AND price < VWAP AND session/weekday allowed",
+      "stop": "ATR \u00d7 SL_mult at entry (fixed)",
+      "target": "ATR \u00d7 TP_mult at entry (fixed)",
+      "exit": "No trailing, fixed SL/TP"
+    },
+    "notes": "Non-repainting, close-bar confirmation. Multiple session filters.",
+    "date_found": "2026-11-16T14:07:51.476043"
+  },
+  {
+    "id": "STRAT-005",
+    "name": "VWAP Rotation Pivot: Zero-Lag EMA65 / Session VWAP + Pivot R2/S2",
+    "source_url": "https://www.mql5.com/ko/market/product/200388",
+    "source_type": "mql5",
+    "status": "Complete",
+    "indicators": [
+      "Zero-Lag EMA 65",
+      "Session VWAP",
+      "Daily Pivots (R2/S2)",
+      "EMA 50",
+      "ATR"
+    ],
+    "parameters": {
+      "zlema_period": 65,
+      "vwap_anchor": "daily session",
+      "pivot_r2_s2": true,
+      "ema_stop": 50,
+      "atr_sl": true
+    },
+    "timeframe": "Intraday",
+    "pairs": [
+      "XAUUSD"
+    ],
+    "session": "Daily session reset",
+    "rules": {
+      "momentum_long": "ZLEMA65 crosses above session VWAP AND both rising",
+      "momentum_short": "ZLEMA65 crosses below session VWAP AND both falling",
+      "pivot_rotation_long": "Momentum long hits R2 -> close momentum, open bounce short if averages point down",
+      "pivot_rotation_short": "Momentum short hits S2 -> close momentum, open bounce long if averages point up",
+      "bounce_exit": "Price returns to VWAP",
+      "stop": "ATR-based SL on every trade",
+      "ema_stop_line": "Momentum trades close if price crosses back through EMA50"
+    },
+    "notes": "No martingale/grid. Closed-bar signals. Pivot rotation adds mean-reversion layer.",
+    "date_found": "2026-11-16T14:07:51.476046"
+  },
+  {
+    "id": "STRAT-006",
+    "name": "Anchored VWAP / EMA9 Bias-Gated Entries",
+    "source_url": "https://www.mql5.com/ko/market/product/196843",
+    "source_type": "mql5",
+    "status": "Complete",
+    "indicators": [
+      "Anchored VWAP",
+      "EMA 9"
+    ],
+    "parameters": {
+      "vwap_anchor": "anchored",
+      "ema_period": 9
+    },
+    "timeframe": "Any",
+    "pairs": [
+      "Any (forex, indices, commodities, crypto, stocks)"
+    ],
+    "session": "Any",
+    "rules": {
+      "bias_bullish": "EMA9 crosses above VWAP",
+      "bias_bearish": "EMA9 crosses below VWAP",
+      "entry_long": "Bullish bias active AND price closes above EMA9",
+      "entry_short": "Bearish bias active AND price closes below EMA9",
+      "exit_long": "Price closes below EMA9 (Exit X)",
+      "exit_short": "Price closes above EMA9 (Exit X)",
+      "bias_flip_exit": "If Price/EMA signals disabled, VWAP/EMA crossover arms Exit X directly"
+    },
+    "notes": "Bias-gated entries prevent counter-trend trades. Works any symbol/timeframe.",
+    "date_found": "2026-11-16T14:07:51.476049"
+  },
+  {
+    "id": "STRAT-007",
+    "name": "EMA 9/21 + VWAP Slope Filter (French)",
+    "source_url": "https://fr.tradingview.com/script/2dvhxn9p-EMA-VWAP-Strategy/",
+    "source_type": "tradingview",
+    "status": "Complete",
+    "indicators": [
+      "EMA 9",
+      "EMA 21",
+      "VWAP"
+    ],
+    "parameters": {
+      "fast_ema": 9,
+      "slow_ema": 21,
+      "vwap_slope_filter": true
+    },
+    "timeframe": "M5, M15",
+    "pairs": [
+      "Forex",
+      "Indices",
+      "Gold"
+    ],
+    "session": "Weekdays only (Mon-Fri)",
+    "rules": {
+      "entry_long": "EMA9 crosses above VWAP AND EMA9 > EMA21 AND VWAP has clear directional slope (not flat)",
+      "entry_short": "EMA9 crosses below VWAP AND EMA9 < EMA21 AND VWAP has clear directional slope (not flat)",
+      "exit": "Opposite crossover or VWAP slope flattens"
+    },
+    "notes": "Smart filter avoids ranging VWAP. Designed for 5-15min charts.",
+    "date_found": "2026-11-16T14:07:51.476052"
+  },
+  {
+    "id": "STRAT-008",
+    "name": "VWAP 9 EMA Cross with 1 ATR Stop (Backtested)",
+    "source_url": "https://www.backtestingmax.com/backtests/vwap-9-ema",
+    "source_type": "backtest",
+    "status": "Complete",
+    "indicators": [
+      "EMA 9",
+      "VWAP (session)",
+      "ATR(14)"
+    ],
+    "parameters": {
+      "ema_period": 9,
+      "vwap_anchor": "session (cash open)",
+      "atr_period": 14,
+      "atr_sl_mult": 1.0,
+      "session_hours": "09:30-16:00 NY (US indices), 09:00-17:30 Berlin (DAX)",
+      "cross_rule": "R2 (first cross only, hold to session end)"
+    },
+    "timeframe": "M1, M5, M15",
+    "pairs": [
+      "NQ",
+      "SPX",
+      "Dow",
+      "DAX",
+      "Gold",
+      "EURUSD",
+      "GBPUSD",
+      "USDJPY"
+    ],
+    "session": "Cash session only",
+    "rules": {
+      "entry_long": "EMA9 crosses above VWAP, candle closes above both, enter next candle open",
+      "entry_short": "EMA9 crosses below VWAP, candle closes below both, enter next candle open",
+      "stop": "1 ATR below VWAP (long) / 1 ATR above VWAP (short)",
+      "exit": "Session end (16:00 NY / 17:30 Berlin) OR opposite cross (R1 variant)",
+      "variant_r1": "Stop-and-reverse on every cross",
+      "variant_r2": "First cross only, hold to session end"
+    },
+    "notes": "Backtested: DAX 15m +215% (both periods), NQ 15m +23%. Gold/forex failed. Costs eat ~2/3 of gross edge.",
+    "date_found": "2026-11-16T14:07:51.476054"
+  },
+  {
+    "id": "STRAT-009",
+    "name": "Golden Cross 50/200 SMA with 3 ATR Stop",
+    "source_url": "https://www.backtestingmax.com/backtests/golden-cross-death-cross",
+    "source_type": "backtest",
+    "status": "Complete",
+    "indicators": [
+      "SMA 50",
+      "SMA 200",
+      "ATR(14)"
+    ],
+    "parameters": {
+      "fast_sma": 50,
+      "slow_sma": 200,
+      "atr_period": 14,
+      "atr_sl_mult": 3.0
+    },
+    "timeframe": "H4, D1",
+    "pairs": [
+      "Gold",
+      "EURUSD",
+      "GBPUSD",
+      "SPX",
+      "NQ",
+      "DAX",
+      "FTSE",
+      "Silver",
+      "USDJPY",
+      "AUDUSD"
+    ],
+    "session": "All",
+    "rules": {
+      "entry_long": "SMA50 crosses above SMA200 (golden cross), enter next candle open",
+      "entry_short": "SMA50 crosses below SMA200 (death cross), enter next candle open",
+      "stop": "3 \u00d7 ATR(14) from prior candle close",
+      "exit": "Opposite cross (death cross closes long, golden cross closes short)",
+      "no_trade_after_sl": "Wait for next cross after stop-out"
+    },
+    "notes": "H4 results: Gold +47% PF1.52, EURUSD +39% PF1.39, GBPUSD +25% PF1.32, NQ +10% PF1.16. D1: too few trades. Gold/EURUSD/GBPUSD passed on H4.",
+    "date_found": "2026-11-16T14:07:51.476061"
+  },
+  {
+    "id": "STRAT-010",
+    "name": "GBPJPY 12 SMA / 32 SMA Band Crossover",
+    "source_url": "https://www.forexfactory.com/thread/22466-simplest-strategy-for-gbp-jpy",
+    "source_type": "forum",
+    "status": "Complete",
+    "indicators": [
+      "SMA 12",
+      "SMA 32 High",
+      "SMA 32 Low",
+      "SMA 32 Close"
+    ],
+    "parameters": {
+      "fast_sma": 12,
+      "slow_sma": 32,
+      "sma_types": [
+        "high",
+        "low",
+        "close"
+      ],
+      "lots_per_3k": 3
+    },
+    "timeframe": "H1",
+    "pairs": [
+      "GBPJPY"
+    ],
+    "session": "All",
+    "rules": {
+      "entry_long": "SMA12 crosses above each of the 32 SMA (high, low, close) -> buy 1 lot each cross (3 lots total)",
+      "entry_short": "SMA12 crosses below each of the 32 SMA -> sell 1 lot each cross",
+      "exit": "Close and reverse when SMA12 crosses back (no spread cost on reverse)",
+      "position_sizing": "3 lots per $3000 equity (micro lots for smaller accounts)"
+    },
+    "notes": "Always 3 lots open. Reverse on cross-back saves spread. Author warns: backtesting useless due to candle-close lag.",
+    "date_found": "2026-11-16T14:07:51.476064"
+  },
+  {
+    "id": "STRAT-011",
+    "name": "Fib Pullback (38.2-78.6) + EMA 20/50 Confluence",
+    "source_url": "https://acy.com/en/market-news/education/market-education-moving-average-pullback-strategy-fibonacci-confluence-j-o-20250724-115805/",
+    "source_type": "blog",
+    "status": "Complete",
+    "indicators": [
+      "SMA 50",
+      "EMA 20",
+      "Fibonacci Retracement (38.2, 50, 61.8, 78.6)"
+    ],
+    "parameters": {
+      "trend_sma": 50,
+      "momentum_ema": 20,
+      "fib_levels": [
+        38.2,
+        50,
+        61.8,
+        78.6
+      ],
+      "confluence_tolerance": "Fib level aligns with EMA"
+    },
+    "timeframe": "H1, H4",
+    "pairs": [
+      "Forex majors",
+      "Gold",
+      "Indices"
+    ],
+    "session": "Trending sessions",
+    "rules": {
+      "trend_long": "Price > SMA50 AND Price > EMA20",
+      "trend_short": "Price < SMA50 AND Price < EMA20",
+      "fib_draw_long": "Swing Low -> Swing High",
+      "fib_draw_short": "Swing High -> Swing Low",
+      "shallow_zone": "38.2-50% fib + EMA20 confluence = aggressive entry",
+      "deep_zone": "61.8-78.6% fib + SMA50 confluence = conservative swing entry",
+      "confirmation": "Bullish/bearish engulfing or wick rejection at confluence zone",
+      "stop_shallow": "Below entry wick or recent swing low",
+      "stop_deep": "Below swing structure or fib 78.6%",
+      "tp1": "Previous swing high/low",
+      "tp2": "Fib extension 1.272 or 1.618"
+    },
+    "notes": "Confluence of Fib + MA + structure (OB, FVG, S/R) increases probability. Wait for price action confirmation.",
+    "date_found": "2026-11-16T14:07:51.476067"
+  },
+  {
+    "id": "STRAT-012",
+    "name": "VWAP 2-SD Mean Reversion with ADX Regime Filter",
+    "source_url": "https://crosstrade.io/learn/trading-strategies/vwap-reversion",
+    "source_type": "blog",
+    "status": "Complete",
+    "indicators": [
+      "Session VWAP",
+      "VWAP SD Bands (\u00b11, \u00b12, \u00b13\u03c3)",
+      "ADX(14)",
+      "ATR(14)"
+    ],
+    "parameters": {
+      "vwap_anchor": "session",
+      "sd_bands": [
+        1,
+        2,
+        3
+      ],
+      "adx_period": 14,
+      "adx_threshold": 25,
+      "atr_period": 14,
+      "atr_sl_mult": 1.0,
+      "preferred_sessions": [
+        "10:00-11:30 ET",
+        "13:30-14:30 ET"
+      ],
+      "preferred_days": [
+        "Wed",
+        "Thu"
+      ],
+      "avoid": [
+        "9:30-10:00 ET",
+        "FOMC/CPI/NFP days",
+        "Fri 14:30-16:00"
+      ]
+    },
+    "timeframe": "M5",
+    "pairs": [
+      "ES",
+      "NQ",
+      "US30",
+      "NAS100",
+      "Gold"
+    ],
+    "session": "Non-event days, mid-morning/early afternoon chop",
+    "rules": {
+      "regime_filter": "ADX(14) < 25 (no strong trend), no major news \u00b11hr, opening range < 2\u00d7 20-day avg",
+      "setup_long": "Price extends to -2SD (below VWAP), rejection candle (pin bar, engulfing, volume spike)",
+      "setup_short": "Price extends to +2SD (above VWAP), rejection candle",
+      "entry": "Market order next bar open after trigger closes",
+      "stop": "1 \u00d7 ATR beyond trigger high/low",
+      "target": "VWAP (optional: half at VWAP, trail rest to other side)",
+      "invalid": "Price pushes to 3SD with acceleration"
+    },
+    "notes": "Fails on strong trend days. Regime filter mandatory. Best on ES/NQ during chop.",
+    "date_found": "2026-11-16T14:07:51.476071"
+  },
+  {
+    "id": "STRAT-013",
+    "name": "US30 VWAP Trend Pullback with Hammer Trigger",
+    "source_url": "https://fazencapital.com/learn/en/vwap-day-trading-strategy-for-indices-and-gold",
+    "source_type": "blog",
+    "status": "Complete",
+    "indicators": [
+      "VWAP (daily)",
+      "ATR(14)"
+    ],
+    "parameters": {
+      "vwap_anchor": "daily session",
+      "timeframe": "M5",
+      "atr_period": 14,
+      "rr_ratio": 2.0
+    },
+    "timeframe": "M5",
+    "pairs": [
+      "US30",
+      "NAS100",
+      "Gold",
+      "Stocks"
+    ],
+    "session": "US cash session (09:30-16:00 EST), trending days only",
+    "rules": {
+      "context_long": "Clear uptrend on M5, price > VWAP for most of session",
+      "signal_long": "Pullback to VWAP, bullish hammer/rejection candle at VWAP",
+      "entry_long": "Buy above hammer high",
+      "stop_long": "Below swing low and VWAP (or 0.5-1.0 \u00d7 ATR below VWAP)",
+      "target_long": "2:1 R:R or prior session high",
+      "context_short": "Clear downtrend, price < VWAP",
+      "signal_short": "Rally to VWAP, bearish rejection candle",
+      "entry_short": "Sell below rejection low",
+      "stop_short": "Above swing high and VWAP",
+      "target_short": "2:1 R:R or prior session low"
+    },
+    "notes": "Fails in choppy/range markets. Order flow (cumulative delta) adds confirmation.",
+    "date_found": "2026-11-16T14:07:51.476073"
+  },
+  {
+    "id": "STRAT-014",
+    "name": "EMA 9/21 Multi-Timeframe Pullback (QuantLogic)",
+    "source_url": "https://www.quantlogic.io/setups/ema-9-21?lang=en",
+    "source_type": "research",
+    "status": "Complete",
+    "indicators": [
+      "EMA 9 (5min)",
+      "EMA 21 (5min)",
+      "EMA 21 (1min)"
+    ],
+    "parameters": {
+      "trend_tf": "5min",
+      "entry_tf": "1min",
+      "fast_ema": 9,
+      "slow_ema": 21
+    },
+    "timeframe": "5min trend / 1min entry",
+    "pairs": [
+      "Forex",
+      "Indices",
+      "Gold",
+      "Futures"
+    ],
+    "session": "All",
+    "rules": {
+      "trend_long": "5min EMA9 > 5min EMA21 (uptrend confirmed)",
+      "entry_long": "1min low touches 1min EMA21 AND 1min close > 1min EMA21 (pullback holds)",
+      "trend_short": "5min EMA9 < 5min EMA21 (downtrend confirmed)",
+      "entry_short": "1min high touches 1min EMA21 AND 1min close < 1min EMA21 (rally fails)",
+      "known_at": "Bar close",
+      "note": "First pullback after trend start != late pullback; time/distance are data points"
+    },
+    "notes": "QuantLogic's exact rule. Multi-timeframe: 5min for trend, 1min for precision entry.",
+    "date_found": "2026-11-16T14:07:51.476076"
+  },
+  {
+    "id": "STRAT-015",
+    "name": "Triple EMA 9/21/55 Alignment + Pullback to Medium",
+    "source_url": "https://ctrader.com/products/4938",
+    "source_type": "bot",
+    "status": "Complete",
+    "indicators": [
+      "EMA 9",
+      "EMA 21",
+      "EMA 55",
+      "ATR(14)"
+    ],
+    "parameters": {
+      "fast_ema": 9,
+      "medium_ema": 21,
+      "slow_ema": 55,
+      "atr_period": 14,
+      "atr_sl_mult": 1.5,
+      "rr_mult": 3.5,
+      "risk_per_trade": 0.005
+    },
+    "timeframe": "H1-H4",
+    "pairs": [
+      "US30",
+      "Major FX pairs"
+    ],
+    "session": "Trending markets",
+    "rules": {
+      "alignment_long": "EMA9 > EMA21 > EMA55 (all rising)",
+      "alignment_short": "EMA9 < EMA21 < EMA55 (all falling)",
+      "entry_long": "Price pulls back to EMA21 (medium) in aligned uptrend, enter on rejection",
+      "entry_short": "Price rallies to EMA21 in aligned downtrend, enter on rejection",
+      "stop": "1.5 \u00d7 ATR(14) from entry",
+      "target": "3.5R fixed (3-4R payoff)",
+      "daily_limit": "Adjustable for prop/funded accounts"
+    },
+    "notes": "cBot for cTrader. Only enters when all 3 EMAs aligned. Pullback to medium EMA avoids chasing.",
+    "date_found": "2026-11-16T14:07:51.476079"
+  },
+  {
+    "id": "STRAT-016",
+    "name": "EMA50/SMA200 Cross -> First Pullback to EMA50 + Fib Targets",
+    "source_url": "https://www.forexfactory.com/thread/1235842-first-pullback-after-crossover",
+    "source_type": "forum",
+    "status": "Complete",
+    "indicators": [
+      "EMA 50",
+      "SMA 200",
+      "Fibonacci (0, 50, 100, 161.8, 188, 200, 261.8, 341.1, 423.6)"
+    ],
+    "parameters": {
+      "ema_period": 50,
+      "sma_period": 200,
+      "fib_levels": [
+        0,
+        50,
+        100,
+        161.8,
+        188,
+        200,
+        261.8,
+        341.1,
+        423.6
+      ]
+    },
+    "timeframe": "Any (applied to close)",
+    "pairs": [
+      "Forex",
+      "Gold",
+      "Indices"
+    ],
+    "session": "All",
+    "rules": {
+      "setup_long": "EMA50 crosses above SMA200, wait for first pullback to touch EMA50",
+      "setup_short": "EMA50 crosses below SMA200, wait for first rally to touch EMA50",
+      "wick_rule": "Wick can touch SMA200, but candle CANNOT close beyond SMA200",
+      "fib_draw_long": "High of retracement -> Low of retracement",
+      "fib_draw_short": "Low of retracement -> High of retracement",
+      "entry_long": "Buy stop at fib 100 level",
+      "entry_short": "Sell stop at fib 100 level",
+      "stop_long": "Below fib 0 level",
+      "stop_short": "Above fib 0 level",
+      "tp1": "Fib 161.8 (move to BE)",
+      "tp_extensions": "188, 200, 261.8, 341.1, 423.6",
+      "invalidation": "Close beyond SMA200 OR EMA/SMA cross again"
+    },
+    "notes": "SL > TP initially (100 level to 0 level vs 161.8), but extensions provide large R-multiples. First pullback only.",
+    "date_found": "2026-11-16T14:07:51.476082"
+  },
+  {
+    "id": "STRAT-017",
+    "name": "Gold 5M Scalp: EMA9/21 Pullback with 15M EMA50 Filter",
+    "source_url": "https://forextradelab.com/blog/gold-scalping-strategy-xauusd/",
+    "source_type": "blog",
+    "status": "Complete",
+    "indicators": [
+      "EMA 9 (5M)",
+      "EMA 21 (5M)",
+      "EMA 50 (15M)",
+      "RSI 14 (5M)",
+      "ATR 14 (5M)",
+      "VWAP (session)"
+    ],
+    "parameters": {
+      "exec_tf": "5M",
+      "filter_tf": "15M",
+      "ema_fast": 9,
+      "ema_medium": 21,
+      "ema_filter": 50,
+      "rsi_period": 14,
+      "atr_period": 14,
+      "rsi_long_min": 40,
+      "rsi_short_max": 60
+    },
+    "timeframe": "5M execution / 15M filter",
+    "pairs": [
+      "XAUUSD"
+    ],
+    "session": "All",
+    "rules": {
+      "filter_long": "15M price > EMA50",
+      "filter_short": "15M price < EMA50",
+      "setup_long": "5M pullback to EMA21 holds (no close below), bullish candle closes above EMA9, RSI > 40",
+      "setup_short": "5M rally to EMA21 rejects (no close above), bearish candle closes below EMA9, RSI < 60",
+      "stop": "ATR-based (dollars)",
+      "target": "Not specified (scalp)",
+      "vwap_reversion": "In ranging: price stretches 1.5\u00d7ATR from session VWAP -> reversal candle -> target VWAP"
+    },
+    "notes": "Only scalp in direction of 15M EMA50. VWAP mean reversion for range conditions.",
+    "date_found": "2026-11-16T14:07:51.476086"
+  },
+  {
+    "id": "STRAT-018",
+    "name": "VWAP Price Cross (Basic) with 1 ATR Stop",
+    "source_url": "https://www.backtestingmax.com/backtests/vwap-cross-intraday",
+    "source_type": "backtest",
+    "status": "Complete",
+    "indicators": [
+      "VWAP (session)",
+      "ATR(14)"
+    ],
+    "parameters": {
+      "vwap_anchor": "session (cash open)",
+      "atr_period": 14,
+      "atr_sl_mult": 1.0,
+      "session_hours": "Cash session"
+    },
+    "timeframe": "M5, M15, M30",
+    "pairs": [
+      "SPX",
+      "NQ",
+      "DAX",
+      "Gold",
+      "EURUSD",
+      "GBPUSD",
+      "USDJPY",
+      "AUDUSD"
+    ],
+    "session": "Cash session",
+    "rules": {
+      "entry_long": "Candle closes above VWAP AND prior candle closed below VWAP -> enter next open",
+      "entry_short": "Candle closes below VWAP AND prior candle closed above VWAP -> enter next open",
+      "stop": "1 ATR below VWAP (long) / 1 ATR above VWAP (short)",
+      "exit": "Session end or opposite cross",
+      "variants": [
+        "First 2 hours only (helped DAX)",
+        "200 EMA trend filter",
+        "High volume cross only",
+        "Fixed 2:1 TP"
+      ]
+    },
+    "notes": "DAX 15m/30m only profitable market (+215%, +108% both periods). Gold/forex failed catastrophically (-90%+). 2-hour session filter helped DAX.",
+    "date_found": "2026-11-16T14:07:51.476089"
+  },
+  {
+    "id": "STRAT-019",
+    "name": "EMA 9/21 Crossover (1H Futures) - RipBacktest Results",
+    "source_url": "https://ripbacktest.com/findings/",
+    "source_type": "backtest",
+    "status": "Rejected",
+    "indicators": [
+      "EMA 9",
+      "EMA 21"
+    ],
+    "parameters": {
+      "fast_ema": 9,
+      "slow_ema": 21,
+      "timeframe": "1H"
+    },
+    "timeframe": "1H",
+    "pairs": [
+      "ES",
+      "NQ",
+      "GC (Gold)"
+    ],
+    "session": "All",
+    "rules": {
+      "entry_long": "EMA9 crosses above EMA21",
+      "entry_short": "EMA9 crosses below EMA21"
+    },
+    "notes": "RipBacktest: 12 variants tested, 0 passed all gates. 'Buried \u00b7 No proven edge'. Gold 5M EMA20/50+200 filter also buried.",
+    "date_found": "2026-11-16T14:07:51.476092"
+  },
+  {
+    "id": "STRAT-020",
+    "name": "Lux Clara: Fast/Slow EMA Cross + VWAP Filter + Time Window",
+    "source_url": "https://doc.stocksharp.com/zh/api-examples/1001_Lux_Clara_Ema_Vwap",
+    "source_type": "code",
+    "status": "Complete",
+    "indicators": [
+      "Fast EMA",
+      "Slow EMA",
+      "VWAP (session)",
+      "Time window"
+    ],
+    "parameters": {
+      "fast_ema": "configurable",
+      "slow_ema": "configurable",
+      "vwap_anchor": "session",
+      "time_window": "configurable"
+    },
+    "timeframe": "Any",
+    "pairs": [
+      "Any"
+    ],
+    "session": "Time-window filtered",
+    "rules": {
+      "entry_long": "Fast EMA crosses above Slow EMA AND Slow EMA > VWAP AND within time window",
+      "entry_short": "Fast EMA crosses below Slow EMA AND Slow EMA < VWAP AND within time window",
+      "exit": "Opposite EMA cross"
+    },
+    "notes": "Chinese docs. Slow EMA relative to VWAP acts as trend filter. Time window avoids low-liquidity hours.",
+    "date_found": "2026-11-16T14:07:51.476094"
+  }
+]

@@ -1,0 +1,19 @@
+{
+  "strategy_id": "STRAT-003",
+  "pair": "gbpusd",
+  "timeframe": "15min",
+  "trades": 8060,
+  "win_rate": 0.1425558312655087,
+  "profit_factor": 0.7479712389476951,
+  "max_dd": 6352.3897702738095,
+  "total_pnl_usd": -101725.56767434342,
+  "sharpe": -1.9430686423695156,
+  "oos_pf": 0.7555864209288959,
+  "oos_wr": 0.14302932904781038,
+  "passed": false,
+  "fail_reasons": [
+    "PF < 1.3: 0.75",
+    "Max DD > 20%: 6352.4%",
+    "OOS PF < 1.0: 0.76"
+  ]
+}

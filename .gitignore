@@ -1,0 +1,33 @@
+# Hermes internal
+.hermes/
+*.pyc
+__pycache__/
+*.sqlite
+*.db
+
+# Data files (too large)
+*.csv
+*.parquet
+
+# Environment
+.env
+.env.local
+
+# Logs
+logs/
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Large files
+*.bin
+*.pkl
+*.model

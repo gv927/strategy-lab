@@ -1,0 +1,15 @@
+{
+  "strategy_id": "STRAT-003",
+  "pair": "xauusd",
+  "timeframe": "15min",
+  "trades": 1774,
+  "win_rate": 0.2452085682074408,
+  "profit_factor": 2.3679986456081394,
+  "max_dd": 19.553636495734867,
+  "total_pnl_usd": 300526096.36065346,
+  "sharpe": 1.3908392515957662,
+  "oos_pf": 2.731321852978921,
+  "oos_wr": 0.2446043165467626,
+  "passed": true,
+  "fail_reasons": []
+}
