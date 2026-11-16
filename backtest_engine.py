@@ -78,9 +78,21 @@ class BacktestResult:
 
 def load_data(pair: str, timeframe: str) -> pd.DataFrame:
     """Load and prepare OHLC data."""
-    f = DATA_DIR / f"{pair}_{timeframe}_master.csv"
+    # Map pair names to actual file prefixes
+    file_map = {
+        'us30': 'usa30idxusd',
+        'xauusd': 'xauusd',
+        'eurusd': 'eurusd',
+        'gbpjpy': 'gbpjpy',
+        'gbpusd': 'gbpusd',
+        'usdjpy': 'usdjpy',
+        'audusd': 'audusd',
+        'usdcad': 'usdcad',
+    }
+    file_prefix = file_map.get(pair, pair)
+    f = DATA_DIR / f"{file_prefix}_{timeframe}_master.csv"
     if not f.exists():
-        raise FileNotFoundError(f"No data for {pair} {timeframe}")
+        raise FileNotFoundError(f"No data for {pair} {timeframe} (tried {file_prefix}_{timeframe}_master.csv)")
     
     df = pd.read_csv(f)
     df['Timestamp'] = pd.to_datetime(df['Timestamp'])
