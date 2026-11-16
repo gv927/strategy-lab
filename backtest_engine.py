@@ -23,6 +23,9 @@ SPREADS = {
     'gbpjpy': 1.5,     # 1.5 pips
     'gbpusd': 1.0,     # 1.0 pips
     'usdjpy': 0.8,     # 0.8 pips
+    'us30': 2.0,       # ~20 points (2 pips equivalent)
+    'audusd': 1.0,     # 1.0 pips
+    'usdcad': 1.2,     # 1.2 pips
 }
 
 # Pip values
@@ -32,6 +35,9 @@ PIP_VALUE = {
     'gbpjpy': 0.01,
     'gbpusd': 0.0001,
     'usdjpy': 0.01,
+    'us30': 1.0,       # 1 point = $1 (CFD)
+    'audusd': 0.0001,
+    'usdcad': 0.0001,
 }
 
 # Slippage (pips) - realistic for market orders
